@@ -1,5 +1,7 @@
 ﻿using _02_Linq.Files;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using static _02_Linq.ListGenerator;
 namespace _02_Linq
 {
@@ -211,6 +213,111 @@ namespace _02_Linq
             //        Console.WriteLine(p);
             //}
             #endregion
+            #region LINQ - Partitioning Operators
+            //Q1
+
+            //var result = CustomersList.Where(c => c.Region == "WA").SelectMany(o => o.Orders).Take(3);
+            //foreach (var item in result)
+            //{
+            //    Console.WriteLine(item);
+            //}
+
+            //Q2
+            //var result = CustomersList.Where(c => c.Region == "WA").SelectMany(o => o.Orders).Skip(2);
+
+            //foreach (var item in result)
+            //{
+            //    Console.WriteLine(item);
+            //}
+
+            //Q3
+
+            //int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+
+            //var result = numbers.TakeWhile((n, i) => n > i);
+
+            //foreach (var item in result)
+            //{
+            //    Console.WriteLine(item);
+            //}
+
+            //Q4
+            //int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+
+            //var result = numbers.SkipWhile(n => n % 3 != 0);
+
+            //foreach (var item in result)
+            //{
+            //    Console.WriteLine(item);
+            //}
+
+            //Q5
+            //int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
+
+            //var result = numbers.SkipWhile((n, i) => n > i);
+
+            //foreach (var item in result)
+            //{
+            //    Console.WriteLine(item);
+            //}
+            #endregion
+            #region LINQ – Grouping Operators
+            //Q1
+            //List<int> numbers = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
+
+            //var result = numbers.GroupBy(n => n % 5);
+
+            //foreach (var number in result)
+            //{
+            //    Console.WriteLine($"Numbers with remainder of {number.Key} when divided by 5");
+
+            //    foreach (var n in number)
+            //        Console.WriteLine(n);
+            //}
+
+            //Q2
+            //string[] lines = File.ReadAllLines("dictionary_english.txt");
+
+            //var result = lines.GroupBy(w => w[0]);
+
+            //foreach (var item in result)
+            //{
+            //    Console.WriteLine(item.Key);
+            //    foreach (var n in item)
+            //        Console.WriteLine(n);
+            //}
+
+
+            //Q3
+            //string[] Arr = { "from   ", " salt", " earn ", "  last   ", " near ", " form  " };
+
+            //var result = Arr.GroupBy(w => w.Trim(), new EquailityComparer());
+
+            //foreach (var item in result)
+            //{
+            //    foreach (var word in item)
+            //        Console.WriteLine(word);
+            //}
+            #endregion
+        }
+        class EquailityComparer : IEqualityComparer<string>
+        {
+            public bool Equals(string? x, string? y)
+            {
+                return Sort(x) == Sort(y);
+            }
+
+            public int GetHashCode([DisallowNull] string obj)
+            {
+                return Sort(obj).GetHashCode();
+            }
+
+            string Sort(string obj)
+            {
+                var word = obj.ToCharArray();
+                Array.Sort(word);
+                return new string(word);
+            }
         }
     }
 }
